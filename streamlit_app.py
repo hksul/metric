@@ -23,56 +23,44 @@ eDate = datetime.date(2012,12,31)
 print(eDate)
 #print(sDate.year)
 
-#kq11_df = fdr.DataReader('KQ11', sDate.year)
-ks11_df = fdr.DataReader('KS11', sDate.year)
+def get_data():
+  #kq11_df = fdr.DataReader('KQ11', sDate.year)
+  ks11_df = fdr.DataReader('KS11', sDate.year)
 
-#kq11_df.head()
-#ks11_df.head()
-#ks11_df.tail()
+  #kq11_df.head()
+  #ks11_df.head()
+  #ks11_df.tail()
 
-eDate = datetime.date(2021,12,31)
-dType = 'KOSDAQ'
-dType = 'KOSPI'
-if dType == 'KOSPI':
-  df = ks11_df
-else:
-  df = kq11_df
+  eDate = datetime.date(2021,12,31)
+  dType = 'KOSDAQ'
+  dType = 'KOSPI'
+  if dType == 'KOSPI':
+    df = ks11_df
+  else:
+    df = kq11_df
 
-df_result = pd.DataFrame()
+  df_result = pd.DataFrame()
 
-for dateDiff in (1, 5, 10, 15, 30, 60, 125):
-  numLoss = 0
-  numWin = 0
-  numStalemate = 0
-  for (index, row), ii in zip(df.iterrows(), range(len(df.index))):
-    if index.date() <= eDate and index.date() >= sDate:
-      if row['Close'] > df.iloc[ii-dateDiff]['Close']:
-        numWin +=1
-      elif row['Close'] < df.iloc[ii-dateDiff]['Close']:
-        numLoss +=1
-      else:
-        numStalemate +=1
-  numTot = numWin+numLoss+numStalemate
-  #print(dateDiff, numWin/numTot, numLoss/numTot, numStalemate/numTot)
-  new_row = {'days':dateDiff, 'win %':numWin/numTot*100}
-  df_result = df_result.append(new_row, ignore_index=True)
+  for dateDiff in (1, 5, 10, 15, 30, 60, 125):
+    numLoss = 0
+    numWin = 0
+    numStalemate = 0
+    for (index, row), ii in zip(df.iterrows(), range(len(df.index))):
+      if index.date() <= eDate and index.date() >= sDate:
+        if row['Close'] > df.iloc[ii-dateDiff]['Close']:
+          numWin +=1
+        elif row['Close'] < df.iloc[ii-dateDiff]['Close']:
+          numLoss +=1
+        else:
+          numStalemate +=1
+    numTot = numWin+numLoss+numStalemate
+    #print(dateDiff, numWin/numTot, numLoss/numTot, numStalemate/numTot)
+    new_row = {'days':dateDiff, 'win %':numWin/numTot*100}
+    df_result = df_result.append(new_row, ignore_index=True)
+  return df_result
 
 
 
-
-fig1, ax = plt.subplots()
-
-x = [int(a) for a in list(df_result['days'])]
-xi = list(range(len(x)))
-y = list(df_result['win %'])
-ax.plot(xi, y, color='b')
-ax.set_xlabel('Timeframe - days')
-ax.set_ylabel('Probability (%)') 
-ax.set_title('Positive Return Probability for Korean Stocks - %s; %s - %s' % (dType, sDate.strftime('%m/%d/%Y'), eDate.strftime('%m/%d/%Y')))
-ax.set_xticks(ticks=xi)
-ax.set_xticklabels(x)
-#fig1.savefig('1.png')
-st.pyplot(fig1)
 
 
 country = st.sidebar.text_input('Country')
@@ -88,3 +76,18 @@ with col3:
 
 if r1:
   st.write("Update Database running")
+
+  df_res = get_data()
+  fig1, ax = plt.subplots()
+
+  x = [int(a) for a in list(df_res['days'])]
+  xi = list(range(len(x)))
+  y = list(df_res['win %'])
+  ax.plot(xi, y, color='b')
+  ax.set_xlabel('Timeframe - days')
+  ax.set_ylabel('Probability (%)') 
+  ax.set_title('Positive Return Probability for Korean Stocks - %s; %s - %s' % (dType, sDate.strftime('%m/%d/%Y'), eDate.strftime('%m/%d/%Y')))
+  ax.set_xticks(ticks=xi)
+  ax.set_xticklabels(x)
+  #fig1.savefig('1.png')
+  st.pyplot(fig1)
