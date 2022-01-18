@@ -1,4 +1,5 @@
 finance-datareader
+matplotlib
 bs4
 xlrd
 git+https://github.com/FinanceData/FinanceDataReader.git
