@@ -10,8 +10,8 @@ Original file is located at
 
 #!pip install -U finance-datareader
 
-import pip
-pip.main(['install', '-U', 'finance-datareader'])
+#import pip
+#pip.main(['install', '-U', 'finance-datareader'])
 
 import pandas as pd
 import datetime
