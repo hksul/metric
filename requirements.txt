@@ -1,1 +1,2 @@
+finance-datareader
 git+https://github.com/FinanceData/FinanceDataReader.git
