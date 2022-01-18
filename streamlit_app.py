@@ -22,18 +22,12 @@ print(eDate)
 eDate = datetime.date(2012,12,31)
 print(eDate)
 #print(sDate.year)
-
-def get_data():
-  #kq11_df = fdr.DataReader('KQ11', sDate.year)
+dataType = 'KOSDAQ'
+dataType = 'KOSPI'
+def get_data(dType):
   ks11_df = fdr.DataReader('KS11', sDate.year)
-
-  #kq11_df.head()
-  #ks11_df.head()
-  #ks11_df.tail()
-
   eDate = datetime.date(2021,12,31)
-  dType = 'KOSDAQ'
-  dType = 'KOSPI'
+  
   if dType == 'KOSPI':
     df = ks11_df
   else:
@@ -77,7 +71,7 @@ with col3:
 if r1:
   st.write("Update Database running")
 
-  df_res = get_data()
+  df_res = get_data(dataType)
   fig1, ax = plt.subplots()
 
   x = [int(a) for a in list(df_res['days'])]
