@@ -95,9 +95,7 @@ if dataType or startY or endY:
     
 if st.sidebar.button('Update All'):
   for dataType in ('KOSDAQ', 'KOSPI'):
-    for startYear in range(2000, 2011):
       for endYear in (2011, 2022):
-        startDate = datetime.date(startYear, 1, 1)
         endDate = datetime.date(endYear, 12, 31)
         try:
           df_r = fetchFromDB(dataType, startDate, endDate)
