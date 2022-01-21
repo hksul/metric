@@ -10,6 +10,7 @@ import pandas as pd
 import datetime
 import FinanceDataReader as fdr
 import pymongo
+import time
 
 
 def processImage1(dType, sDate, eDate):
@@ -90,4 +91,18 @@ if dataType or startY or endY:
     except:
       df_r = processAndInsertToDB(dataType, startDate, endDate)    
     drawImage(df_r, dataType, startDate, endDate)
+
+    
+if st.sidebar.button('Update All'):
+  for dataType in ('KOSDAQ', 'KOSPI'):
+    for startYear in range(2000, 2011):
+      for endYear in (2011, 2022):
+        startDate = datetime.date(startYear, 1, 1)
+        endDate = datetime.date(endYear, 12, 31)
+        try:
+          df_r = fetchFromDB(dataType, startDate, endDate)
+        except:
+          df_r = processAndInsertToDB(dataType, startDate, endDate)    
+        drawImage(df_r, dataType, startDate, endDate)
+        time.sleep(30)
 
