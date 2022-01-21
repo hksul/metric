@@ -16,7 +16,7 @@ import time
 def downloadRawData(dType):
   if dType == 'KOSPI':
     df = fdr.DataReader('KS11', 2000)
-  elif dType == 'KOSDAQ:
+  elif dType == 'KOSDAQ':
     df = fdr.DataReader('KQ11', 2000)  
   return df
   
