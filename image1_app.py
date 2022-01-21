@@ -15,10 +15,8 @@ import time
 
 def processImage1(dType, sDate, eDate):
   if dType == 'KOSPI':
-    ks11_df = fdr.DataReader('KS11', sDate.year)
     df = ks11_df
   else:
-    kq11_df = fdr.DataReader('KQ11', sDate.year)
     df = kq11_df
   df_result = pd.DataFrame()
 
@@ -70,6 +68,10 @@ def drawImage(df_res, dataType, startDate, endDate):
     ax.set_xticklabels(x)
     st.pyplot(fig1)
 
+    
+ks11_df = fdr.DataReader('KS11', 2000)
+kq11_df = fdr.DataReader('KQ11', 2000)
+
 db = connect_db("metricStudio")
 company = db["image1"]
 
@@ -94,7 +96,8 @@ if dataType or startY or endY:
 
     
 if st.sidebar.button('Update All'):
-  for dataType in ('KOSDAQ', 'KOSPI'):
+  with st.spinner('Processing...'):
+    for dataType in ('KOSDAQ', 'KOSPI'):
       for endYear in range(2011, today.year):
         endDate = datetime.date(endYear, 12, 31)
         try:
