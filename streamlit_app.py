@@ -57,14 +57,6 @@ def connect_db(databaseName):
     db = client[databaseName]
     return db
                                  
-startDate = datetime.date(2000, 1, 1)
-today = datetime.datetime.now()
-endDate = datetime.date(today.year, today.month, today.day)
-print(endDate)
-endDate = datetime.date(2014,12,31)
-print(endDate)
-dataType = 'KOSDAQ'
-dataType = 'KOSPI'
 
                                  
                                  
@@ -94,6 +86,19 @@ with col2:
     r2 = st.button('2')
 with col3:
     r3 = st.button('3')
+
+dataType = st.selectbox("Market", ('KOSDAQ', 'KOSPI'))
+
+startY = st.selectbox("Start Year", range(2000, 2011))
+endY = st.selectbox("End Year", range(2011, 2022))
+
+startDate = datetime.date(startY, 1, 1)
+#today = datetime.datetime.now()
+#endDate = datetime.date(today.year, today.month, today.day)
+print(endDate)
+endDate = datetime.date(endY,12,31)
+print(endDate)
+
 
 if r1:
   st.write("Update Database running")
