@@ -83,10 +83,11 @@ endDate = datetime.date(endY, 12, 31)
 
 
 if dataType or startY or endY:
-  st.write("Update Database running")
-  try:
-    df_r = fetchFromDB(dataType, startDate, endDate)
-  except:
-    df_r = processAndInsertToDB(dataType, startDate, endDate)    
-  drawImage(df_r, dataType, startDate, endDate)
+  with st.spinner('Processing...'):
+    #st.write("Update Database running")
+    try:
+      df_r = fetchFromDB(dataType, startDate, endDate)
+    except:
+      df_r = processAndInsertToDB(dataType, startDate, endDate)    
+    drawImage(df_r, dataType, startDate, endDate)
 
