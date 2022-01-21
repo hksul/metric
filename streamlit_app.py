@@ -72,7 +72,6 @@ def drawImage(df_res, dataType, startDate, endDate):
 db = connect_db("metricStudio")
 company = db["image1"]
 
-r1 = st.sidebar.button('Update Graph')
 dataType = st.sidebar.selectbox("Market", ('KOSDAQ', 'KOSPI'))
 
 startY = st.sidebar.selectbox("Start Year", range(2000, 2011))
@@ -83,7 +82,7 @@ endY = st.sidebar.selectbox("End Year", range(2011, today.year))
 endDate = datetime.date(endY, 12, 31)
 
 
-if r1 or dataType or startY or endY:
+if dataType or startY or endY:
   st.write("Update Database running")
   try:
     df_r = fetchFromDB(dataType, startDate, endDate)
