@@ -78,10 +78,10 @@ def fetchFromDB(dataType, startDate, endDate):
                                  
 country = st.sidebar.text_input('Country')
 
-col1, col2, col3 = st.columns([1,1,1])
+col1, col2, col3 = st.columns([1,0,0])
 
 with col1:
-    r1 = st.button('Update The Database')
+    r1 = st.sidebar.button('Update Graph')
 with col2:
     r2 = st.button('2')
 with col3:
