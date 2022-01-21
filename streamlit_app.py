@@ -14,23 +14,18 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
 import FinanceDataReader as fdr
+import pymongo
 
-sDate = datetime.date(2000, 1, 1)
-today = datetime.datetime.now()
-eDate = datetime.date(today.year, today.month, today.day)
-print(eDate)
-eDate = datetime.date(2012,12,31)
-print(eDate)
-#print(sDate.year)
-dataType = 'KOSDAQ'
-dataType = 'KOSPI'
-def get_data(dType):
-  ks11_df = fdr.DataReader('KS11', sDate.year)
-  eDate = datetime.date(2021,12,31)
+
+def processImage1(dType, sDate, eDate):
+  
+  
   
   if dType == 'KOSPI':
+    ks11_df = fdr.DataReader('KS11', sDate.year)
     df = ks11_df
   else:
+    ks11_df = fdr.DataReader('KQ11', sDate.year)
     df = kq11_df
 
   df_result = pd.DataFrame()
@@ -55,8 +50,38 @@ def get_data(dType):
 
 
 
+def connect_db(databaseName):    
+    client = pymongo.MongoClient("mongodb://%s:%s@%s" % (st.secrets.db_credentials.username, st.secrets.db_credentials.password, st.secrets.db_credentials.uriString)
+    db = client[databaseName]
+    return db
+                                 
+startDate = datetime.date(2000, 1, 1)
+today = datetime.datetime.now()
+endDate = datetime.date(today.year, today.month, today.day)
+print(endDate)
+endDate = datetime.date(2014,12,31)
+print(endDate)
+dataType = 'KOSDAQ'
+dataType = 'KOSPI'
 
+                                 
+                                 
+db = connect_db("metricStudio")
+company = db["image1"]
 
+def processAndInsertToDB(dataType, startDate, endDate):
+    df_result = processImage1(dataType, startDate, endDate)
+    data_dict = df_result.to_dict("records")
+    company.insert_one({"index":"image1_%s_%s" % (startDate.year, endDate.year),"data":data_dict})
+    return df_result
+
+def fetchFromDB(dataType, startDate, endDate):
+
+    data_from_db = company.find_one({"index":"image1_%s_%s" % (startDate.year, endDate.year)})
+    df = pd.DataFrame(data_from_db["data"])
+    return df
+                                 
+                                 
 country = st.sidebar.text_input('Country')
 
 col1, col2, col3 = st.columns([1,1,1])
@@ -71,7 +96,12 @@ with col3:
 if r1:
   st.write("Update Database running")
 
-  df_res = get_data(dataType)
+  #df_res = get_data(dataType)
+  try:
+    df_res = fetchFromDB(dataType, startDate, endDate)
+  except:
+    df_res = processAndInsertToDB(dataType, startDate, endDate)
+    
   fig1, ax = plt.subplots()
 
   x = [int(a) for a in list(df_res['days'])]
