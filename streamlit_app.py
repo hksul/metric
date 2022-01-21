@@ -25,7 +25,7 @@ def processImage1(dType, sDate, eDate):
     ks11_df = fdr.DataReader('KS11', sDate.year)
     df = ks11_df
   else:
-    ks11_df = fdr.DataReader('KQ11', sDate.year)
+    kq11_df = fdr.DataReader('KQ11', sDate.year)
     df = kq11_df
 
   df_result = pd.DataFrame()
