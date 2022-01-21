@@ -51,7 +51,9 @@ def processImage1(dType, sDate, eDate):
 
 
 def connect_db(databaseName):    
-    client = pymongo.MongoClient("mongodb://%s:%s@%s" % (st.secrets.db_credentials.username, st.secrets.db_credentials.password, st.secrets.db_credentials.uriString)
+    mUri = "mongodb://%s:%s@%s" % (st.secrets.db_credentials.username, st.secrets.db_credentials.password, st.secrets.db_credentials.uriString)
+    print(mUri)
+    client = pymongo.MongoClient(mUri)
     db = client[databaseName]
     return db
                                  
