@@ -76,16 +76,9 @@ def fetchFromDB(dataType, startDate, endDate):
     return df
                                  
                                  
-country = st.sidebar.text_input('Country')
+#country = st.sidebar.text_input('Country')
 
-col1, col2, col3 = st.columns([1,0,0])
-
-with col1:
-    r1 = st.sidebar.button('Update Graph')
-with col2:
-    r2 = st.button('2')
-with col3:
-    r3 = st.button('3')
+r1 = st.sidebar.button('Update Graph')
 
 dataType = st.sidebar.selectbox("Market", ('KOSDAQ', 'KOSPI'))
 
@@ -100,7 +93,7 @@ endDate = datetime.date(endY,12,31)
 #print(endDate)
 
 
-if r1:
+if r1 or dataType or startY or endY:
   st.write("Update Database running")
 
   #df_res = get_data(dataType)
