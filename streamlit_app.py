@@ -87,10 +87,10 @@ with col2:
 with col3:
     r3 = st.button('3')
 
-dataType = st.selectbox("Market", ('KOSDAQ', 'KOSPI'))
+dataType = st.sidebar.selectbox("Market", ('KOSDAQ', 'KOSPI'))
 
-startY = st.selectbox("Start Year", range(2000, 2011))
-endY = st.selectbox("End Year", range(2011, 2022))
+startY = st.sidebar.selectbox("Start Year", range(2000, 2011))
+endY = st.sidebar.selectbox("End Year", range(2011, 2022))
 
 startDate = datetime.date(startY, 1, 1)
 #today = datetime.datetime.now()
