@@ -12,12 +12,17 @@ import FinanceDataReader as fdr
 import pymongo
 import time
 
+@st.cache
+def downloadRawData(dType):
+  if dType == 'KOSPI':
+    df = fdr.DataReader('KS11', 2000)
+  elif dType == 'KOSDAQ:
+    df = fdr.DataReader('KQ11', 2000)  
+  return df
+  
 
 def processImage1(dType, sDate, eDate):
-  if dType == 'KOSPI':
-    df = ks11_df
-  else:
-    df = kq11_df
+  df = downloadRawData(dType)
   df_result = pd.DataFrame()
 
   for dateDiff in (1, 5, 10, 15, 30, 60, 125):
@@ -69,8 +74,6 @@ def drawImage(df_res, dataType, startDate, endDate):
     st.pyplot(fig1)
 
     
-ks11_df = fdr.DataReader('KS11', 2000)
-kq11_df = fdr.DataReader('KQ11', 2000)
 
 db = connect_db("metricStudio")
 company = db["image1"]
@@ -94,7 +97,7 @@ if dataType or startY or endY:
       df_r = processAndInsertToDB(dataType, startDate, endDate)    
     drawImage(df_r, dataType, startDate, endDate)
 
-    
+"""    
 if st.sidebar.button('Update All'):
   with st.spinner('Processing...'):
     for dataType in ('KOSDAQ', 'KOSPI'):
@@ -106,4 +109,4 @@ if st.sidebar.button('Update All'):
           df_r = processAndInsertToDB(dataType, startDate, endDate)    
         drawImage(df_r, dataType, startDate, endDate)
         time.sleep(30)
-
+"""
