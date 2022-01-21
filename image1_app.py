@@ -97,16 +97,16 @@ if dataType or startY or endY:
       df_r = processAndInsertToDB(dataType, startDate, endDate)    
     drawImage(df_r, dataType, startDate, endDate)
 
-"""    
-if st.sidebar.button('Update All'):
-  with st.spinner('Processing...'):
-    for dataType in ('KOSDAQ', 'KOSPI'):
-      for endYear in range(2011, today.year):
-        endDate = datetime.date(endYear, 12, 31)
-        try:
-          df_r = fetchFromDB(dataType, startDate, endDate)
-        except:
-          df_r = processAndInsertToDB(dataType, startDate, endDate)    
-        drawImage(df_r, dataType, startDate, endDate)
-        time.sleep(30)
-"""
+
+#if st.sidebar.button('Update All'):
+#  with st.spinner('Processing...'):
+#    for dataType in ('KOSDAQ', 'KOSPI'):
+#      for endYear in range(2011, today.year):
+#        endDate = datetime.date(endYear, 12, 31)
+#        try:
+#          df_r = fetchFromDB(dataType, startDate, endDate)
+#        except:
+#          df_r = processAndInsertToDB(dataType, startDate, endDate)    
+#        drawImage(df_r, dataType, startDate, endDate)
+#        time.sleep(30)
+
