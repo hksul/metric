@@ -112,7 +112,7 @@ if r1:
   ax.plot(xi, y, color='b')
   ax.set_xlabel('Timeframe - days')
   ax.set_ylabel('Probability (%)') 
-  ax.set_title('Positive Return Probability for Korean Stocks - %s; %s - %s' % (dType, sDate.strftime('%m/%d/%Y'), eDate.strftime('%m/%d/%Y')))
+  ax.set_title('Positive Return Probability for Korean Stocks - %s; %s - %s' % (dataType, startDate.strftime('%m/%d/%Y'), endDate.strftime('%m/%d/%Y')))
   ax.set_xticks(ticks=xi)
   ax.set_xticklabels(x)
   #fig1.savefig('1.png')
