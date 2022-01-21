@@ -74,12 +74,12 @@ company = db["image1"]
 def processAndInsertToDB(dataType, startDate, endDate):
     df_result = processImage1(dataType, startDate, endDate)
     data_dict = df_result.to_dict("records")
-    company.insert_one({"index":"image1_%s_%s" % (startDate.year, endDate.year),"data":data_dict})
+    company.insert_one({"index":"image1_%s_%s_%s" % (dataType, startDate.year, endDate.year),"data":data_dict})
     return df_result
 
 def fetchFromDB(dataType, startDate, endDate):
 
-    data_from_db = company.find_one({"index":"image1_%s_%s" % (startDate.year, endDate.year)})
+    data_from_db = company.find_one({"index":"image1_%s_%s_%s" % (dataType, startDate.year, endDate.year)})
     df = pd.DataFrame(data_from_db["data"])
     return df
                                  
