@@ -96,7 +96,7 @@ if dataType or startY or endY:
       df_r = fetchFromDB(dataType, startDate, endDate)
     except:
       df_r = processAndInsertToDB(dataType, startDate, endDate)    
-    drawImage(df_r, dataType, startDate, endDate)
+    drawImage1(df_r, dataType, startDate, endDate)
 
 
 #if st.sidebar.button('Update All'):
