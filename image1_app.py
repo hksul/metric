@@ -60,7 +60,7 @@ def fetchFromDB(dataType, startDate, endDate):
     df = pd.DataFrame(data_from_db["data"])
     return df
 
-def drawImage(df_res, dataType, startDate, endDate):
+def drawImage1(df_res, dataType, startDate, endDate):
     fig1, ax = plt.subplots()
     x = [int(a) for a in list(df_res['days'])]
     xi = list(range(len(x)))
