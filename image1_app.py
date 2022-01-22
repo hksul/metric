@@ -14,9 +14,9 @@ import time
 
 @st.cache
 def downloadRawData(dType):
-  if dType == 'KOSPI':
+  if dType == 'KOSPI Index':
     df = fdr.DataReader('KS11', 2000)
-  elif dType == 'KOSDAQ':
+  elif dType == 'KOSDAQ Index':
     df = fdr.DataReader('KQ11', 2000)  
   return df
   
@@ -78,7 +78,7 @@ def drawImage(df_res, dataType, startDate, endDate):
 db = connect_db("metricStudio")
 company = db["image1"]
 
-dataType = st.sidebar.selectbox("Market", ('KOSDAQ', 'KOSPI'))
+dataType = st.sidebar.selectbox("Market", ('KOSDAQ Index', 'KOSPI Index'))
 
 startY = st.sidebar.selectbox("Start Year", range(2000, 2011))
 startDate = datetime.date(startY, 1, 1)
@@ -100,7 +100,7 @@ if dataType or startY or endY:
 
 #if st.sidebar.button('Update All'):
 #  with st.spinner('Processing...'):
-#    for dataType in ('KOSDAQ', 'KOSPI'):
+#    for dataType in ('KOSDAQ Index', 'KOSPI Index'):
 #      for endYear in range(2011, today.year):
 #        endDate = datetime.date(endYear, 12, 31)
 #        try:
