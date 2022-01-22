@@ -14,9 +14,9 @@ import time
 
 @st.cache
 def downloadRawData(dType):
-  if dType == 'KOSPI Index':
+  if dType == 'KOSPI':
     df = fdr.DataReader('KS11', 2000)
-  elif dType == 'KOSDAQ Index':
+  elif dType == 'KOSDAQ':
     df = fdr.DataReader('KQ11', 2000)  
   return df
   
@@ -68,7 +68,7 @@ def drawImage(df_res, dataType, startDate, endDate):
     ax.plot(xi, y, color='b')
     ax.set_xlabel('Timeframe - days')
     ax.set_ylabel('Probability (%)') 
-    ax.set_title('Positive Return Probability for Korean Stocks - %s; %s - %s' % (dataType, startDate.strftime('%m/%d/%Y'), endDate.strftime('%m/%d/%Y')))
+    ax.set_title('Positive Return Probability for Korean Stocks - %s Index; %s - %s' % (dataType, startDate.strftime('%m/%d/%Y'), endDate.strftime('%m/%d/%Y')))
     ax.set_xticks(ticks=xi)
     ax.set_xticklabels(x)
     st.pyplot(fig1)
@@ -78,7 +78,8 @@ def drawImage(df_res, dataType, startDate, endDate):
 db = connect_db("metricStudio")
 company = db["image1"]
 
-dataType = st.sidebar.selectbox("Market", ('KOSDAQ Index', 'KOSPI Index'))
+dataTypeTmp = st.sidebar.selectbox("Market", ('KOSDAQ Index', 'KOSPI Index'))
+dataType = dataTypeTmp[:-6]
 
 startY = st.sidebar.selectbox("Start Year", range(2000, 2011))
 startDate = datetime.date(startY, 1, 1)
