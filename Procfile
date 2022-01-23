@@ -1,1 +1,1 @@
-eb: sh setup.sh && streamlit run jobmatch.py
+eb: sh setup.sh && streamlit run image1_app.py
