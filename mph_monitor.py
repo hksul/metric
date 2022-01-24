@@ -14,7 +14,7 @@ balance = getData('getuserbalance')
 hashrate = getData('getuserhashrate')
 
 totBalance = sum(balance['getuserbalance']['data'].values())
-curHashrate = hashrate['getuserhashrate']['data']
+curHashrate = '%.2f' % (hashrate['getuserhashrate']['data']/1000,)
 
-st.write(totBalance)
-st.write(curHashrate)
+st.write("Total Balance: ", totBalance)
+st.write("Rate: ", curHashrate)
