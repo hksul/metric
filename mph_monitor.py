@@ -1,15 +1,20 @@
-
-
+import streamlit as st
 import requests
-key = ''
-url = ''
-id = ''
-actionList = ['getuserbalance', 'getuserhashrate']
+
+apiKey = st.secrets.db_credentials.apiKey
+apiUrl = st.secrets.db_credentials.apiUrl
+apiId = st.secrets.db_credentials.apiId
+
 def getData(action):
-     url2 = url % ( action, key, id)
+     url2 = apiUrl % ( action, apiKey, apiId)
      result = requests.get(url2)
      return eval(result.text.strip())
+
 balance = getData('getuserbalance')
 hashrate = getData('getuserhashrate')
-sum(balance['getuserbalance']['data'].values())
-hashrate['getuserhashrate']['data']
+
+totBalance = sum(balance['getuserbalance']['data'].values())
+curHashrate = hashrate['getuserhashrate']['data']
+
+st.write(totBalance)
+st.write(curHashrate)
