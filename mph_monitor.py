@@ -13,7 +13,7 @@ def getData(action):
 balance = getData('getuserbalance')
 hashrate = getData('getuserhashrate')
 
-totBalance = sum(balance['getuserbalance']['data'].values())
+totBalance = '%.4f' % (sum(balance['getuserbalance']['data'].values()),)
 curHashrate = '%.2f' % (hashrate['getuserhashrate']['data']/1000,)
 
 st.write("Total Balance: ", totBalance)
